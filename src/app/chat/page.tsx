@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { PaperAirplaneIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
 import Header from '@/components/Header';
 
@@ -10,6 +10,7 @@ export default function ChatPage() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -18,6 +19,24 @@ export default function ChatPage() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Focus the textarea on mount and after any interaction
+  useEffect(() => {
+    const focusTextarea = () => {
+      textareaRef.current?.focus();
+    };
+    
+    // Focus on mount
+    focusTextarea();
+    
+    // Focus after any click on the document
+    document.addEventListener('click', focusTextarea);
+    
+    // Cleanup
+    return () => {
+      document.removeEventListener('click', focusTextarea);
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,26 +73,28 @@ export default function ChatPage() {
       >
         <div className="w-full h-[calc(100vh-10rem)] flex flex-col">
           <div className="flex-1 overflow-y-auto mb-4">
-            <div className="space-y-4">
-              {messages.map((message, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className={`max-w-[80%] rounded-lg p-3 ${
-                      message.role === 'user'
-                        ? 'bg-emerald-500 text-white'
-                        : 'bg-gray-100 text-gray-900'
-                    }`}
-                  >
-                    {message.content}
-                  </div>
-                </motion.div>
-              ))}
+            <div className="space-y-6">
+              <AnimatePresence>
+                {messages.map((message, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} px-2`}                >
+                      <div
+                      className={`max-w-[80%] rounded-lg p-3 ${
+                        message.role === 'user'
+                          ? 'bg-emerald-500 text-white'
+                          : 'bg-gray-100 text-gray-900'
+                      }`}
+                    >
+                      {message.content}
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
               <div ref={messagesEndRef} />
             </div>
           </div>
@@ -81,12 +102,14 @@ export default function ChatPage() {
             <form onSubmit={handleSubmit} className="relative">
               <div className="relative">
                 <textarea
+                  ref={textareaRef}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Type your message here... (Press Enter to send, Shift+Enter for new line)"
-                  className="w-full p-4 pr-16 text-gray-900 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none h-32 placeholder-gray-500"
+                  className="w-full p-4 pr-16 text-gray-900 bg-white border border-gray-200 rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-emerald-100 focus:border-emerald-100 resize-none h-32 placeholder-gray-500 [&:focus]:ring-emerald-100 [&:focus]:border-emerald-100"
                   disabled={isLoading}
+                  autoFocus
                 />
                 <button
                   type="submit"
