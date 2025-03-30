@@ -8,7 +8,7 @@ export default function ChatPage() {
   const [message, setMessage] = useState('');
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 relative flex flex-col">
+    <div className="min-h-screen bg-white relative flex flex-col">
       <Header />
       <main className="flex-grow mx-auto w-full max-w-4xl px-4 py-8">
         <div className="flex flex-col h-[calc(100vh-200px)]">
@@ -21,7 +21,7 @@ export default function ChatPage() {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Type your message here..."
-                className="w-full p-4 pr-16 text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent resize-none h-32 placeholder-gray-500 dark:placeholder-gray-400"
+                className="w-full p-4 pr-16 text-gray-900 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none h-32 placeholder-gray-500"
               />
               <button
                 type="button"
@@ -36,4 +36,4 @@ export default function ChatPage() {
       </main>
     </div>
   );
-} 
+}

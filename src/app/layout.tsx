@@ -13,11 +13,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="h-full" suppressHydrationWarning>
-      <body className={`${inter.className} h-full`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+    <html lang="pt-br" className="h-full">
+      <body>
           {children}
-        </ThemeProvider>
       </body>
     </html>
   );
