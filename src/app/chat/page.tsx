@@ -99,8 +99,8 @@ export default function ChatPage() {
                 >
                   <BanknotesIcon className="h-16 w-16 text-emerald-500 mb-4" />
                   <p className="text-gray-600 text-lg max-w-md text-justify font-light font-sans">
-                    Welcome to FinChat! I'm here to help you with your financial questions. 
-                    Feel free to ask anything about money management, investments, or personal finance.
+                    Bem-vindo ao FinChat! Eu sou aqui para ajudar você com suas perguntas financeiras. 
+                    Sinta-se à vontade para perguntar sobre gerenciamento de dinheiro, investimentos ou finanças pessoais.
                   </p>
                 </motion.div>
               )}

@@ -28,13 +28,13 @@ export default function Header() {
               href="/login"
               className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors uppercase tracking-wider"
             >
-              Login
+              Entrar
             </a>
             <a
               href="/signup"
               className="text-sm font-semibold text-white bg-gray-900 hover:bg-gray-800 px-4 py-2 rounded-md transition-colors uppercase tracking-wider"
             >
-              Sign Up
+              Cadastrar
             </a>
           </div>
         </div>
@@ -70,14 +70,14 @@ export default function Header() {
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Login
+                  Entrar
                 </a>
                 <a
                   href="/signup"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white bg-gray-900 hover:bg-gray-800"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Sign Up
+                  Cadastrar
                 </a>
               </div>
             </div>
