@@ -24,7 +24,9 @@ export default function ChatPage() {
   // Focus the textarea on mount and after any interaction
   useEffect(() => {
     const focusTextarea = () => {
-      textareaRef.current?.focus();
+      if (document.activeElement !== textareaRef.current) {
+        textareaRef.current?.focus();
+      }
     };
     
     // Focus on mount
@@ -33,9 +35,21 @@ export default function ChatPage() {
     // Focus after any click on the document
     document.addEventListener('click', focusTextarea);
     
+    // Focus after any key press
+    document.addEventListener('keydown', focusTextarea);
+    
+    // Focus after any scroll
+    document.addEventListener('scroll', focusTextarea);
+    
+    // Focus after any touch
+    document.addEventListener('touchstart', focusTextarea);
+    
     // Cleanup
     return () => {
       document.removeEventListener('click', focusTextarea);
+      document.removeEventListener('keydown', focusTextarea);
+      document.removeEventListener('scroll', focusTextarea);
+      document.removeEventListener('touchstart', focusTextarea);
     };
   }, []);
 
