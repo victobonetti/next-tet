@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PaperAirplaneIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
 import Header from '@/components/Header';
+import ChatBubble from '@/components/ChatBubble';
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant', content: string }>>([]);
@@ -82,15 +83,13 @@ export default function ChatPage() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.3 }}
-                    className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} px-2`}                >
-                      <div
-                      className={`max-w-[80%] rounded-lg p-3 ${
-                        message.role === 'user'
-                          ? 'bg-emerald-500 text-white'
-                          : 'bg-gray-100 text-gray-900'
-                      }`}
-                    >
-                      {message.content}
+                    className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} px-2`}
+                  >
+                    <div className="w-full max-w-[85%]">
+                      <ChatBubble
+                        text={message.content}
+                        isUser={message.role === 'user'}
+                      />
                     </div>
                   </motion.div>
                 ))}
