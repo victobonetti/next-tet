@@ -15,7 +15,7 @@ export default function ChatBubble({ text, isUser }: ChatBubbleProps) {
             : 'bg-gray-100 text-gray-900 rounded-tl-xs'
         }`}
       >
-        <div className="whitespace-pre-wrap break-words">{text}</div>
+        <div className="whitespace-pre-wrap break-words font-light font-sans">{text}</div>
       </div>
     </div>
   );

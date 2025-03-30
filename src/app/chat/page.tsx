@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PaperAirplaneIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
+import { PaperAirplaneIcon, ArrowPathIcon, BanknotesIcon } from '@heroicons/react/24/solid';
 import Header from '@/components/Header';
 import ChatBubble from '@/components/ChatBubble';
 
@@ -87,8 +87,23 @@ export default function ChatPage() {
         className="flex-1 flex items-center justify-center w-full max-w-4xl mx-auto px-4 pt-24 pb-8"
       >
         <div className="w-full h-[calc(100vh-10rem)] flex flex-col">
-          <div className="flex-1 overflow-y-auto mb-4">
+          <div className="flex-1 overflow-y-auto mb-4 relative">
             <div className="space-y-6">
+              {messages.length === 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
+                >
+                  <BanknotesIcon className="h-16 w-16 text-emerald-500 mb-4" />
+                  <p className="text-gray-600 text-lg max-w-md text-justify font-light font-sans">
+                    Welcome to FinChat! I'm here to help you with your financial questions. 
+                    Feel free to ask anything about money management, investments, or personal finance.
+                  </p>
+                </motion.div>
+              )}
               <AnimatePresence>
                 {messages.map((message, index) => (
                   <motion.div
@@ -120,7 +135,7 @@ export default function ChatPage() {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Type your message here... (Press Enter to send, Shift+Enter for new line)"
-                  className="w-full p-4 pr-16 text-gray-900 bg-white border border-gray-200 rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-emerald-100 focus:border-emerald-100 resize-none h-32 placeholder-gray-500 [&:focus]:ring-emerald-100 [&:focus]:border-emerald-100"
+                  className="w-full p-4 pr-16 text-gray-900 bg-white border border-gray-200 rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-emerald-100 focus:border-emerald-100 resize-none h-32 placeholder-gray-500 [&:focus]:ring-emerald-100 [&:focus]:border-emerald-100 font-light font-sans"
                   disabled={isLoading}
                   autoFocus
                 />
