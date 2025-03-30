@@ -36,18 +36,25 @@ export default function ChatPage() {
     }, 1000);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-white relative flex flex-col mt-21">
+    <div className="min-h-screen bg-white relative flex flex-col">
       <Header />
       <motion.main 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="flex-grow mx-auto w-full max-w-4xl px-4 py-8"
+        className="flex-1 flex items-center justify-center w-full max-w-4xl mx-auto px-4 pt-24 pb-8"
       >
-        <div className="flex flex-col items-center justify-center h-[calc(100vh-200px)]">
-          <div className="flex-grow overflow-y-auto mb-4">
-            <div className="flex-1 overflow-y-auto mb-4 space-y-4">
+        <div className="w-full h-[calc(100vh-10rem)] flex flex-col">
+          <div className="flex-1 overflow-y-auto mb-4">
+            <div className="space-y-4">
               {messages.map((message, index) => (
                 <motion.div
                   key={index}
@@ -70,13 +77,14 @@ export default function ChatPage() {
               <div ref={messagesEndRef} />
             </div>
           </div>
-          <div className="mt-auto w-full">
-            <form onSubmit={handleSubmit} className="w-full relative">
-              <div className="relative w-full">
+          <div className="mt-auto">
+            <form onSubmit={handleSubmit} className="relative">
+              <div className="relative">
                 <textarea
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Type your message here..."
+                  onKeyDown={handleKeyDown}
+                  placeholder="Type your message here... (Press Enter to send, Shift+Enter for new line)"
                   className="w-full p-4 pr-16 text-gray-900 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none h-32 placeholder-gray-500"
                   disabled={isLoading}
                 />
